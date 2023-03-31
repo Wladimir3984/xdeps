@@ -35,3 +35,5 @@ function exdeps.check_tools(tools)
 
 end
 
+return exdeps
+
