@@ -1,4 +1,4 @@
-local exdeps = {}
+exdeps = {}
 
 exdeps.tools = {
                { check = "autopep8", install_command = "pip install autopep8", method = win, desc = "autopep8 for formatting" },
