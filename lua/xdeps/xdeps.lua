@@ -1,16 +1,16 @@
-exdeps = {}
+local M = {}
 
-exdeps.tools = {
+M.tools = {
                { check = "autopep8", install_command = "pip install autopep8", method = win, desc = "autopep8 for formatting" },
                { check = "prettier", install_command = "npm install --global prettier", method = win, desc = "prettier for formatting" }
               }
-exdeps.methods = {
+M.methods = {
                  windows = function(install)
                    vim.cmd([[!powershell -Command "Start-Process powershell -Verb runAs -ArgumentList ']] .. install .. [['"]])
                  end
                 }
 
-function exdeps.check_tools(tools)
+function M.check_tools(tools)
   for i, tool in ipairs(tools) do
       local check = tool.check
       local install_command = tool.install_command
@@ -28,12 +28,12 @@ function exdeps.check_tools(tools)
           else  
             break
           end
-          exdeps.methods[method](install_command)
+          M.methods[method](install_command)
         end
       end
   end
 
 end
 
-return exdeps
+return M
 
