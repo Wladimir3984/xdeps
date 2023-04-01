@@ -68,13 +68,8 @@ function M.check_tools()
       end
       vim.cmd("redraw!")
   end
-if all_installed then
-  vim.cmd("redraw!")
-  print("All tools are installed. [" .. msg_non_auto .. "] [" .. msg_auto .. "].")
-else
-  vim.cmd("redraw!")
-  print("Some tools are not installed. [" .. msg_not_installed .. "] [" .. msg_non_auto .. "] [" .. msg_auto .. "].")
-end
+vim.cmd("redraw!")
+print("Status: [" .. msg_not_installed .. "] [" .. msg_non_auto .. "] [" .. msg_auto .. "].")
 
 end
 
