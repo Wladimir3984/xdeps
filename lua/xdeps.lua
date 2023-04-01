@@ -22,8 +22,8 @@ function M.check_tools()
       local method = tool.method
       local father = tool.father
       local desc = tool.desc
-      local method_ok = false
-      local method_index = nil
+      local install_ok = false
+
       -- check if father tool is installed
       
       if father then
@@ -43,11 +43,12 @@ function M.check_tools()
         local choice = vim.fn.input(desc .. [[ is not installed. do you want to install it?(y/n) > ]])
         if choice:lower() == "y" then
           vim.cmd("redraw!")
-          if method then -- if method is defined, can´t install if method is not available
+          if method and install_command then -- if method is defined, can´t install if method is not available
             for m, m_method in ipairs(M.methods) do 
               if m_method.method_name == method then
-                method_ok = true
-                method_index = m
+                m_method.method_run(install_command)
+                install_ok = true
+                msg_auto = msg_auto .. check .. ", "
               end
             end 
           else  
@@ -55,13 +56,7 @@ function M.check_tools()
             msg_not_installed = msg_not_installed .. check .. ", "
             break
           end
-          if install_command then
-            M.methods[method_index][method_run](install_command)
-            msg_auto = msg_auto .. check .. ", "
-          else
-            all_installed = false
-            msg_not_installed = msg_not_installed .. check .. ", "
-          end
+
         else
           all_installed = false
           msg_not_installed = msg_not_installed .. check .. ", "
