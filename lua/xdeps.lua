@@ -6,7 +6,7 @@ M.tools = {}
 M.methods = {
   {method_run = function(install)
                      vim.cmd([[!powershell -Command "Start-Process powershell -Verb runAs -ArgumentList ']] .. install .. [['"]])
-                   end, 
+                   end,
    method_name = "windows_admin"},
             }
 
@@ -25,7 +25,7 @@ function M.check_tools()
       local install_ok = false
 
       -- check if father tool is installed
-      
+
       if father then
         local is_father_installed = vim.fn.executable(father) == 1
         if not is_father_installed then -- if not installed, ask user if they want to install it
@@ -37,21 +37,21 @@ function M.check_tools()
       end
 
       -- check if tool is installed
-      
+
       local is_installed = vim.fn.executable(check) == 1
       if not is_installed then -- if not installed, ask user if they want to install it
         local choice = vim.fn.input(desc .. [[ is not installed. do you want to install it?(y/n) > ]])
         if choice:lower() == "y" then
           vim.cmd("redraw!")
           if method and install_command then -- if method is defined, can´t install if method is not available
-            for m, m_method in ipairs(M.methods) do 
+            for m, m_method in ipairs(M.methods) do
               if m_method.method_name == method then
                 m_method.method_run(install_command)
                 install_ok = true
                 msg_auto = msg_auto .. check .. ", "
               end
-            end 
-          else  
+            end
+          else
             all_installed = false
             msg_not_installed = msg_not_installed .. check .. ", "
             break
@@ -72,6 +72,18 @@ vim.cmd("redraw!")
 print("Status: [" .. msg_not_installed .. "] [" .. msg_non_auto .. "] [" .. msg_auto .. "].")
 
 end
+
+-- only check, return true if all tools are installed and false if not
+function M.only_check()
+  local all_installed = true
+  for _, t in ipairs(M.tools) do
+    local is_installed = vim.fn.executable(t.check) == 1
+    if not is_installed then
+      all_installed = false
+      break
+    end
+  end
+  return all_installed
 
 return M
 
