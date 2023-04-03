@@ -84,6 +84,7 @@ function M.only_check()
     end
   end
   return all_installed
+end
 
 return M
 
