@@ -70,7 +70,7 @@ function M.check_tools()
       vim.cmd("redraw!")
   end
 vim.cmd("redraw!")
-notify("Status: [" .. msg_not_installed .. "] [" .. msg_non_auto .. "] [" .. msg_auto .. "].", "info", { title = "xdeps health" })
+notify("Status:\\n[" .. msg_not_installed .. "]\\n[" .. msg_non_auto .. "]\\n[" .. msg_auto .. "].", "info", { title = "xdeps health" })
 
 end
 
