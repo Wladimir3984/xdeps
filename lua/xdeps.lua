@@ -1,3 +1,4 @@
+local notify = require("notify")
 local M = {}
 
 -- Put your externs tools here
@@ -29,7 +30,7 @@ function M.check_tools()
       if father then
         local is_father_installed = vim.fn.executable(father) == 1
         if not is_father_installed then -- if not installed, ask user if they want to install it
-          print(father .. [[ is not installed and its important to have it. Install it before you install ]] .. desc)
+          notify(father .. [[ is not installed and its important to have it. Install it before you install ]] .. desc, "info", {title = "xdeps"})
           all_installed = false
           msg_not_installed = msg_not_installed .. check .. ", "
           break -- go to next tool
@@ -69,7 +70,7 @@ function M.check_tools()
       vim.cmd("redraw!")
   end
 vim.cmd("redraw!")
-print("Status: [" .. msg_not_installed .. "] [" .. msg_non_auto .. "] [" .. msg_auto .. "].")
+notify("Status: [" .. msg_not_installed .. "] [" .. msg_non_auto .. "] [" .. msg_auto .. "].", "info", { title = "xdeps health" })
 
 end
 
